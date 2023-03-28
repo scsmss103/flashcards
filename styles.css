@@ -1,0 +1,97 @@
+:root {
+    --primary: #222831;
+    --secondary: #2d4059;
+    --third: #ff5722;
+    --forth: #eeeeee;
+}
+
+*,
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--primary);
+}
+
+#nav {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--secondary);
+    padding: 8px 8px;
+}
+
+#nav>h1 {
+    color: var(--forth);
+}
+
+#nav-routes {
+    display: flex;
+    gap: 8px;
+    margin-right: 16px;
+}
+
+#nav-routes>a {
+    padding: 4px 10px;
+    color: var(--forth);
+    text-decoration: none;
+}
+
+#nav-routes>a:hover {
+    background-color: var(--forth);
+    color: var(--secondary);
+}
+
+#main {
+    padding: 0 4px;
+}
+
+.flashCardCont {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.flashCard {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flashCard>div {
+    width: 80%;
+    height: 80%;
+    border: 2px solid var(--secondary);
+    border-radius: 5px;
+}
+
+.flashCardBtns {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+    gap: 8px;
+}
+
+.flashCardBtns>button {
+    width: 100%;
+    background-color: var(--secondary);
+    color: var(--forth);
+    padding: 8px;
+    border-radius: 2px;
+    border: 0;
+    cursor: pointer;
+}
+
+/*Media Queries*/
+@media screen and (min-width:769px) {
+    .flashCardBtns {
+        width: 30%;
+        margin: 0 auto;
+    }
+
+    .flashCard>div{
+        width:25%;
+    }
+}
