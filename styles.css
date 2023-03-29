@@ -57,13 +57,53 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    transition: transform 1s;
+    transform-style: preserve-3d
 }
 
-.flashCard>div {
+.flashCardFront,
+.flashCardBack {
     width: 80%;
     height: 80%;
+    display: flex;
+    flex-direction: column;
     border: 2px solid var(--secondary);
     border-radius: 5px;
+    box-shadow: 5px 5px 10px 0px var(--primary);
+    -webkit-box-shadow: 5px 5px 10px 0px var(--primary);
+    -moz-box-shadow: 5px 5px 10px 0px var(--primary);
+    background-color: var(--forth);
+    backface-visibility: hidden;
+}
+
+.flashCardBack {
+    position: absolute;
+    transform: rotateY(180deg)
+}
+
+.flashCardBody {
+    flex: 1;
+}
+
+.flashCardBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flashCardBtn>button {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 0;
+    background-color: transparent;
+    color: var(--primary);
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.flashCard.rotate {
+    transform: rotateY(180deg);
 }
 
 .flashCardBtns {
@@ -91,7 +131,12 @@ body {
         margin: 0 auto;
     }
 
-    .flashCard>div{
-        width:25%;
+    .flashCardFront {
+        width: 25%;
     }
+
+    .flashCardBack {
+        width: 25%;
+    }
+
 }

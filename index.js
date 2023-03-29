@@ -10,7 +10,7 @@ class Page {
         this.testing = 'test'
     }
 
-    async getHTML(url){
+    async getHTML(url) {
         let strPageCont = await fetch(url).then((res) => res.text())
         this.addToPage(strPageCont)
     }
@@ -36,13 +36,25 @@ class FlashCard extends Page {
     }
 
     assignEventlistener() {
-        const btn = this.page.querySelector('#btn')
-        btn.addEventListener('click', () => alert('test click'))
+        const btn = this.page.querySelectorAll('.flashCardBtn>button')
+        Array(...btn).forEach((x) => {
+            console.log(x)
+            x.addEventListener('click', (e) => {
+                let card = e.currentTarget.closest('.flashCard')
+                if (Array(...card.classList).includes('rotate')) {
+                    card.classList.remove('rotate')
+                } else {
+                    card.classList.add('rotate')
+                }
+            })
+        })
+
+
     }
 
     async createPage() {
         await this.getHTML('/pages/flashcard.html')
-        //this.assignEventlistener()
+        this.assignEventlistener()
         setHeight('flashCardCont')
 
     }
