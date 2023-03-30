@@ -46,6 +46,7 @@ body {
     padding: 0 4px;
 }
 
+/* FLASH CARDS*/
 .flashCardCont {
     width: 100%;
     display: flex;
@@ -77,13 +78,32 @@ body {
     backface-visibility: hidden;
 }
 
+.flashCardFront .flashCardQuestion{
+    flex:1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flashCardQuestion{
+    font-weight: bold;
+}
+
 .flashCardBack {
     position: absolute;
     transform: rotateY(180deg)
 }
 
-.flashCardBody {
+.flashCardBack .flashCardQuestion{
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.flashCardAnswer {
     flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .flashCardBtn {
@@ -94,7 +114,7 @@ body {
 
 .flashCardBtn>button {
     padding: 8px;
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
     border: 0;
     background-color: transparent;
     color: var(--primary);
@@ -131,10 +151,7 @@ body {
         margin: 0 auto;
     }
 
-    .flashCardFront {
-        width: 25%;
-    }
-
+    .flashCardFront,
     .flashCardBack {
         width: 25%;
     }

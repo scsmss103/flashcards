@@ -21,6 +21,12 @@ class Page {
         Array(...parent.children).forEach((x) => this.page.append(x))
     }
 
+    attachEventListener(arr, event, func) {
+        arr.forEach((x) => {
+            x.addEventListener(event, func)
+        })
+    }
+
     render() {
         const main = document.getElementById('main')
         main.innerHTML = ''
@@ -31,39 +37,118 @@ class Page {
 class FlashCard extends Page {
     constructor(id) {
         super()
-        this.createPage()
+        this.#createPage()
         this.id = id
+        this.dataHandler = new DataHandler
+        this.dataHandler.getData('url')
+        this.deckIdx = 2
     }
 
-    assignEventlistener() {
+    #assignEventlistener() {
+        //flash card flip button
         const btn = this.page.querySelectorAll('.flashCardBtn>button')
-        Array(...btn).forEach((x) => {
-            console.log(x)
-            x.addEventListener('click', (e) => {
-                let card = e.currentTarget.closest('.flashCard')
-                if (Array(...card.classList).includes('rotate')) {
-                    card.classList.remove('rotate')
-                } else {
-                    card.classList.add('rotate')
-                }
-            })
-        })
+        const flipBtn = () => {
+            let card = document.querySelector('.flashCard')
+            if (Array(...card.classList).includes('rotate')) {
+                card.classList.remove('rotate')
+            } else {
+                card.classList.add('rotate')
+            }
+        }
+        this.attachEventListener(Array(...btn), 'click', flipBtn)
+        //next card
+        const nextCardBtns = this.page.querySelectorAll('.flashCardBtns>button')
+        const nextBtn = () => {
+            let card = document.querySelector('.flashCard')
+            if (Array(...card.classList).includes('rotate')) {
+                card.classList.remove('rotate')
+            }
+            this.deckIdx--
+            setTimeout(()=>this.setFlashCardData(this.deckIdx),900)
+        }
+        this.attachEventListener(Array(...nextCardBtns), 'click', nextBtn)
     }
 
-    async createPage() {
-        await this.getHTML('pages/flashcard.html')
-        this.assignEventlistener()
-        setHeight('flashCardCont')
+    setFlashCardData(idx) {
+        const questions = document.querySelectorAll('.flashCardQuestion>p')
+        const answer = document.querySelector('.flashCardAnswer>p')
+        let questionTxt,answerTxt
+        if (idx >= 0) {
+            questionTxt = this.dataHandler.data[idx]['q']
+            answerTxt = this.dataHandler.data[idx]['a']
+        } else {
+            questionTxt = 'Deck finished <button>click to learn more</button>'
+            answerTxt = ''
+        }
+        Array(...questions).forEach((x) => {
+            console.log(x)
+            x.innerHTML = questionTxt
+        })
+        answer.innerHTML = answerTxt
     }
+
+    async #createPage() {
+        await this.getHTML('pages/flashcard.html')
+        this.#assignEventlistener()
+        setHeight('flashCardCont')
+        this.setFlashCardData(this.deckIdx)
+    }
+}
+
+class DataHandler {
+    #findIdx(data, field, value) {
+        let idx = false
+        data.some((x, i) => {
+            if (x[field] == value) {
+                idx = i
+                return true
+            } else {
+                return false
+            }
+        })
+        return idx
+    }
+
+    getData(url) {
+        this.data = [
+            { id: 0, q: 'Whats the Capital of Switzerland?', a: 'Bern', bucket: 1 },
+            { id: 2, q: 'Whats the Capital of Austria?', a: 'Vienna', bucket: 2 },
+            { id: 1, q: 'Whats the Capital of Germany', a: 'Berlin', bucket: 3 },
+            { id: 1, q: 'Whats the Capital of Russia', a: 'Moskow', bucket: 4 }
+        ]
+    }
+
+    delete(id) {
+        let idx = this.#findIdx(this.data, 'id', id)
+        this.data.splice(idx, 1)
+    }
+
+    add(data) {
+        this.data.push(data)
+    }
+
+    update(id, field, value) {
+        let idx = this.#findIdx(this.data, 'id', id)
+        this.data[idx][field] = value
+    }
+}
+
+class StatsHandler extends DataHandler {
+    constructor() {
+        this.test = 'test'
+        this.getData('url')
+    }
+
+
 }
 
 /// ROUTING ///
 const routes = {
     404: "pages/404.html",
     "/": "pages/home.html",
-    "#dashboard": "pages/dashboard.html",
-    "#decks": "pages/decks.html",
-    "#flashcard": FlashCard
+    "#/dashboard": "pages/dashboard.html",
+    "#/decks": "pages/decks.html",
+    "#/flashcard": FlashCard
 }
 
 const route = (event) => {
@@ -78,7 +163,7 @@ const router = async () => {
     if (path === '') {
         path = '/'
     }
-    if (path !== '#flashcard') {
+    if (path !== '#/flashcard') {
         const route = routes[path] || routes[404]
         const html = await fetch(route).then((res) => res.text())
         const main = document.getElementById('main')
