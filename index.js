@@ -37,14 +37,38 @@ class Page {
 class FlashCard extends Page {
     constructor(id) {
         super()
-        this.#createPage()
         this.id = id
         this.dataHandler = new DataHandler
         this.dataHandler.getData('url')
         this.deckIdx = this.dataHandler.data.length - 1
+        this.#createPage()
     }
 
     #assignEventlistener() {
+        //edit btn
+        const editBtn = this.page.querySelectorAll('.flashCardEditBtn')
+        const editCard = () => {
+            const icons = document.querySelectorAll('.flashCardEditBtn i')
+            const q = document.querySelectorAll('.flashCardQuestion')
+            const a = document.querySelector('.flashCardAnswer')
+            let txtArea = document.createElement('textarea')
+            txtArea.classList.add('flashCardTxtArea')
+            Array(...q).forEach((x)=>{
+                const tmpElem = txtArea.cloneNode(true)
+                tmpElem.value = this.dataHandler.data[this.deckIdx]['q']
+                x.firstElementChild.remove()
+                x.append(tmpElem)
+            })
+            txtArea.value = this.dataHandler.data[this.deckIdx]['a']
+            a.firstElementChild.remove()
+            a.append(txtArea)
+
+            Array(...icons).forEach((x)=>{
+                x.innerText = 'save'
+            })
+            //TODO: save handler
+        }
+        this.attachEventListener(editBtn,'click',editCard)
         //flash card flip button
         const btn = this.page.querySelectorAll('.flashCardBtn>button')
         const flipBtn = () => {
@@ -64,9 +88,9 @@ class FlashCard extends Page {
             if (Array(...card.classList).includes('rotate')) {
                 card.classList.remove('rotate')
             }
-            this.dataHandler.update(this.dataHandler.data[this.deckIdx].id,'bucket',bucket)
+            this.dataHandler.update(this.dataHandler.data[this.deckIdx].id, 'bucket', bucket)
             this.deckIdx--
-            setTimeout(()=>this.setFlashCardData(this.deckIdx),400)
+            setTimeout(() => this.setFlashCardData(this.deckIdx), 400)
             console.log(this.dataHandler.data)
         }
         this.attachEventListener(Array(...nextCardBtns), 'click', nextBtn)
@@ -75,7 +99,7 @@ class FlashCard extends Page {
     setFlashCardData(idx) {
         const questions = document.querySelectorAll('.flashCardQuestion>p')
         const answer = document.querySelector('.flashCardAnswer>p')
-        let questionTxt,answerTxt
+        let questionTxt, answerTxt
         if (idx >= 0) {
             questionTxt = this.dataHandler.data[idx]['q']
             answerTxt = this.dataHandler.data[idx]['a']

@@ -63,6 +63,22 @@ body {
     transform-style: preserve-3d
 }
 
+.flashCardEditBtn {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.flashCardTxtArea {
+    resize: none;
+    padding: 8px;
+    height: 20vh;
+    width: 80%;
+}
+
 .flashCardFront,
 .flashCardBack {
     width: 80%;
