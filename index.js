@@ -51,7 +51,7 @@ class FlashCard extends Page {
     }
 
     async createPage() {
-        await this.getHTML('/pages/flashcard.html')
+        await this.getHTML('pages/flashcard.html')
         this.assignEventlistener()
         setHeight('flashCardCont')
     }
@@ -59,10 +59,10 @@ class FlashCard extends Page {
 
 /// ROUTING ///
 const routes = {
-    404: "/pages/404.html",
+    404: "pages/404.html",
     "/": "pages/home.html",
-    "#dashboard": "/pages/dashboard.html",
-    "#decks": "/pages/decks.html",
+    "#dashboard": "pages/dashboard.html",
+    "#decks": "pages/decks.html",
     "#flashcard": FlashCard
 }
 
