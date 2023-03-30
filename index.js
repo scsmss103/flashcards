@@ -1,4 +1,4 @@
-import { setHeight } from "/flashcard/utils.js"
+import { setHeight } from "./utils.js"
 
 /// Page Classes ///
 class Page {
