@@ -64,7 +64,7 @@ class FlashCard extends Page {
                 card.classList.remove('rotate')
             }
             this.deckIdx--
-            setTimeout(()=>this.setFlashCardData(this.deckIdx),900)
+            setTimeout(()=>this.setFlashCardData(this.deckIdx),400)
         }
         this.attachEventListener(Array(...nextCardBtns), 'click', nextBtn)
     }
@@ -77,11 +77,10 @@ class FlashCard extends Page {
             questionTxt = this.dataHandler.data[idx]['q']
             answerTxt = this.dataHandler.data[idx]['a']
         } else {
-            questionTxt = 'Deck finished <button>click to learn more</button>'
+            questionTxt = 'Deck finished<br><button>click to learn more</button>'
             answerTxt = ''
         }
         Array(...questions).forEach((x) => {
-            console.log(x)
             x.innerHTML = questionTxt
         })
         answer.innerHTML = answerTxt
