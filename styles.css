@@ -78,14 +78,14 @@ body {
     backface-visibility: hidden;
 }
 
-.flashCardFront .flashCardQuestion{
-    flex:1;
+.flashCardFront .flashCardQuestion {
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.flashCardQuestion{
+.flashCardQuestion {
     font-weight: bold;
 }
 
@@ -94,7 +94,7 @@ body {
     transform: rotateY(180deg)
 }
 
-.flashCardBack .flashCardQuestion{
+.flashCardBack .flashCardQuestion {
     text-align: center;
     margin-top: 1rem;
 }

@@ -41,7 +41,7 @@ class FlashCard extends Page {
         this.id = id
         this.dataHandler = new DataHandler
         this.dataHandler.getData('url')
-        this.deckIdx = 2
+        this.deckIdx = this.dataHandler.data.length - 1
     }
 
     #assignEventlistener() {
@@ -58,13 +58,16 @@ class FlashCard extends Page {
         this.attachEventListener(Array(...btn), 'click', flipBtn)
         //next card
         const nextCardBtns = this.page.querySelectorAll('.flashCardBtns>button')
-        const nextBtn = () => {
+        const nextBtn = (e) => {
+            const bucket = parseInt(e.currentTarget.getAttribute('data-bucket'))
             let card = document.querySelector('.flashCard')
             if (Array(...card.classList).includes('rotate')) {
                 card.classList.remove('rotate')
             }
+            this.dataHandler.update(this.dataHandler.data[this.deckIdx].id,'bucket',bucket)
             this.deckIdx--
             setTimeout(()=>this.setFlashCardData(this.deckIdx),400)
+            console.log(this.dataHandler.data)
         }
         this.attachEventListener(Array(...nextCardBtns), 'click', nextBtn)
     }
@@ -113,7 +116,7 @@ class DataHandler {
             { id: 0, q: 'Whats the Capital of Switzerland?', a: 'Bern', bucket: 1 },
             { id: 2, q: 'Whats the Capital of Austria?', a: 'Vienna', bucket: 2 },
             { id: 1, q: 'Whats the Capital of Germany', a: 'Berlin', bucket: 3 },
-            { id: 1, q: 'Whats the Capital of Russia', a: 'Moskow', bucket: 4 }
+            { id: 3, q: 'Whats the Capital of Russia', a: 'Moskow', bucket: 4 }
         ]
     }
 
