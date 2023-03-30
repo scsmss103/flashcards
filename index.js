@@ -1,4 +1,4 @@
-import { setHeight } from "/utils.js"
+import { setHeight } from "/flashcard/utils.js"
 
 /// Page Classes ///
 class Page {
@@ -48,15 +48,12 @@ class FlashCard extends Page {
                 }
             })
         })
-
-
     }
 
     async createPage() {
         await this.getHTML('/pages/flashcard.html')
         this.assignEventlistener()
         setHeight('flashCardCont')
-
     }
 }
 
@@ -66,7 +63,7 @@ const routes = {
     "/": "/pages/home.html",
     "#dashboard": "/pages/dashboard.html",
     "#decks": "/pages/decks.html",
-    "#test": FlashCard
+    "#flashcard": FlashCard
 }
 
 const route = (event) => {
@@ -81,7 +78,7 @@ const router = async () => {
     if (path === '') {
         path = '/'
     }
-    if (path !== '#test') {
+    if (path !== '#flashcard') {
         const route = routes[path] || routes[404]
         const html = await fetch(route).then((res) => res.text())
         const main = document.getElementById('main')
