@@ -60,7 +60,7 @@ class FlashCard extends Page {
 /// ROUTING ///
 const routes = {
     404: "/pages/404.html",
-    "/": "/pages/home.html",
+    "/": "pages/home.html",
     "#dashboard": "/pages/dashboard.html",
     "#decks": "/pages/decks.html",
     "#flashcard": FlashCard
