@@ -46,6 +46,48 @@ body {
     padding: 0 4px;
 }
 
+/*Table*/
+.tblCont {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.tblHeader {
+    display: grid;
+}
+
+textarea.tblCell {
+    resize: none;
+    border: 0;
+    border-bottom: 1px solid var(--primary);
+    border-left: 1px solid var(--primary)
+}
+
+.tblCell {
+    padding: 8px;
+    border-bottom: 1px solid var(--primary);
+    border-left: 1px solid var(--primary);
+}
+
+.tblHeader .tblCell {
+    font-weight: bold;
+}
+
+.tblHeader .tblCell:first-child {
+    border-left: 0;
+}
+
+.tblRows {
+    flex: 1;
+    display: grid;
+}
+
+.tblRows .tblCell:nth-child(odd) {
+    border-left: 0;
+}
+
 /* FLASH CARDS*/
 .flashCardCont {
     width: 100%;
@@ -159,6 +201,48 @@ body {
     border: 0;
     cursor: pointer;
 }
+
+/*Upload*/
+.uploadCont {
+    margin-top: 10vh;
+    padding: 0 10px;
+}
+
+.uplToolBar {
+    display: grid;
+    grid-template-rows: 'max-content';
+    gap: 16px;
+    padding: 16px 0;
+}
+
+.uplToolBar i {
+    cursor: pointer;
+}
+
+.tblToolBarIconWrapper {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.uplToolBar .tblToolBarIconWrapper::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 0;
+    top: 120%;
+    background-color: var(--secondary);
+    color: var(--forth);
+    padding: 2px;
+    border-radius: 2px;
+    border: 0;
+}
+
+
+.uploadCont .tblHeader .tblCell {
+    background-color: var(--secondary);
+    color: var(--forth);
+}
+
+
 
 /*Media Queries*/
 @media screen and (min-width:769px) {
