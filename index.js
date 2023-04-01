@@ -267,10 +267,9 @@ class StatsHandler extends DataHandler {
 }
 
 class Table {
-    constructor(target, toolbar, columns, rows, editable, inpType) {
+    constructor(target, toolbar, columns, rows, editable, inpType, headerClick, rowClick, headerCellComponent, rowCellComponent) {
         this.target = target
         this.tblId = randowmHex()
-        this.promiseTbl = this.#createTbl()
         if (editable) {
             this.editable = true
             this.inpType = inpType
@@ -279,22 +278,30 @@ class Table {
         }
         this.columns = columns
         this.rows = rows
-        //toolbar ? this.toolbar = toolbar : this.toolbar = false
         if (toolbar) {
             this.toolbar = toolbar
         } else {
             this.toolbar = false
         }
+        this.promiseTbl = this.#createTbl()
+        this.rowCellComponent = rowCellComponent
+        this.headerCellComponent = headerCellComponent
+        this.headerClick = headerClick
+        this.rowClick = rowClick
     }
 
-    #createCell(val, type) {
+    #createCell(val, type, component) {
         let cell
-        if (type === 'div') {
-            cell = document.createElement('div')
-        } else if (type === 'input') {
-            cell = document.createElement('input')
-        } else if (type === 'textarea') {
-            cell = document.createElement('textarea')
+        if (!component) {
+            if (type === 'div') {
+                cell = document.createElement('div')
+            } else if (type === 'input') {
+                cell = document.createElement('input')
+            } else if (type === 'textarea') {
+                cell = document.createElement('textarea')
+            }
+        } else {
+            cell = component
         }
         cell.classList.add('tblCell')
         cell.innerHTML = val
@@ -331,7 +338,7 @@ class Table {
         header.style['grid-template-columns'] = `repeat(${this.columns.length},1fr)`
         header.style['grid-template-rows'] = `repeat(1,max-content)`
         this.columns.forEach((x) => {
-            header.append(this.#createCell(x.name, 'div'))
+            header.append(this.#createCell(x.name, 'div', this.headerCellComponent))
         })
     }
 
@@ -344,7 +351,7 @@ class Table {
             const fields = this.columns.map((x) => x.field)
             this.rows.forEach((x) => {
                 fields.forEach((y) => {
-                    rowsCont.append(this.#createCell(x[y], this.inpType))
+                    rowsCont.append(this.#createCell(x[y], this.inpType, this.rowCellComponent))
                 })
             })
         } else {

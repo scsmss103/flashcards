@@ -204,7 +204,7 @@ textarea.tblCell {
 
 /*Upload*/
 .uploadCont {
-    margin-top: 10vh;
+    margin-top: 5vh;
     padding: 0 10px;
 }
 
@@ -212,7 +212,7 @@ textarea.tblCell {
     display: grid;
     grid-template-rows: 'max-content';
     gap: 16px;
-    padding: 16px 0;
+    padding: 8px 0;
 }
 
 .uplToolBar i {
@@ -220,22 +220,20 @@ textarea.tblCell {
 }
 
 .tblToolBarIconWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vh;
+    text-align: center;
     position: relative;
-    margin-bottom: 2rem;
 }
 
 .uplToolBar .tblToolBarIconWrapper::after {
     content: attr(data-tooltip);
-    position: absolute;
-    left: 0;
-    top: 120%;
-    background-color: var(--secondary);
-    color: var(--forth);
+    color: var(--secondary);
     padding: 2px;
     border-radius: 2px;
     border: 0;
 }
-
 
 .uploadCont .tblHeader .tblCell {
     background-color: var(--secondary);
@@ -246,6 +244,8 @@ textarea.tblCell {
 
 /*Media Queries*/
 @media screen and (min-width:769px) {
+
+    /*Flash Card*/
     .flashCardBtns {
         width: 30%;
         margin: 0 auto;
@@ -254,6 +254,25 @@ textarea.tblCell {
     .flashCardFront,
     .flashCardBack {
         width: 25%;
+    }
+
+    /*Upload*/
+
+    .uplToolBar {
+        padding: 16px 0;
+    }
+
+    .uplToolBar .tblToolBarIconWrapper::after {
+        visibility: hidden;
+        background-color: var(--forth);
+        color: var(--secondary);
+        border: 1px solid var(--secondary);
+        position: absolute;
+        top: 120%;
+    }
+
+    .uplToolBar .tblToolBarIconWrapper:hover::after {
+        visibility: visible;
     }
 
 }
